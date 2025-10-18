@@ -1,0 +1,31 @@
+
+# server??
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+# ?????
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      url: jdbc:mysql:jdbc:mysql://localhost:3306/sm_db
+      username: root
+      password: 2798520@Hu
+      driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+  main:
+    web-application-type=servlet:
+mybatis-plus:
+  type-aliases-package: com.xuxulearn.springbootheadline.pojo
+  global-config:
+    db-config:
+      logic-delete-field: isDeleted
+      id-type: auto
+      table-prefix: news_
+#jwt??
+jwt:
+  sign-key: "ThisIsASecretKeyThatIsAtLeast32CharactersLong!"
+  expiration: 30
