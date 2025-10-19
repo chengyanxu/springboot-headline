@@ -29,7 +29,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Autowired
     private JwtHelper jwtHelper;
     @Override
-    public Result login(User user){
+    public Result login(@RequestBody yUser user){
 //根据前端传回的账户密码，在数据库中取出对应的用户
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<User>();
         queryWrapper.eq(User::getUsername,user.getUsername());
@@ -50,7 +50,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     @Override
-    public Result getUserInfo(String token){
+    public Result getUserInfo(@RequestHeader String token){
         boolean expiration = jwtHelper.isExpiration(token);
         if(expiration){
             return Result.build(null, ResultCodeEnum.NOTLOGIN);//登录失效，返回504
@@ -75,7 +75,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     }
     @Override
-    public Result register(User user){
+    public Result register(@RequestBody User user){
         LambdaQueryWrapper<User> queryWrapper=new LambdaQueryWrapper<>();
         queryWrapper.eq(User::getUsername,user.getUsername());
         Long count=userMapper.selectCount(queryWrapper);
