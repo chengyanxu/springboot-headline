@@ -35,7 +35,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         queryWrapper.eq(User::getUsername,user.getUsername());
         User loginUser = userMapper.selectOne(queryWrapper);
         if(loginUser==null){
-            return Result.build(null, ResultCodeEnum.USERNAME_ERROR);
+            return Result.build(null, ResultCodeEnum.USERNAME_ERROR);//返回h501
         }
 
         if(!StringUtils.isEmpty(user.getUserPwd())
@@ -46,14 +46,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
             return Result.ok(data);//如果成功返回200
         }
-        return Result.build(null, ResultCodeEnum.PASSWORD_ERROR);
+        return Result.build(null, ResultCodeEnum.PASSWORD_ERROR);//返回503
     }
 
     @Override
     public Result getUserInfo(String token){
         boolean expiration = jwtHelper.isExpiration(token);
         if(expiration){
-            return Result.build(null, ResultCodeEnum.NOTLOGIN);//登录失效，返回401
+            return Result.build(null, ResultCodeEnum.NOTLOGIN);//登录失效，返回504
         }
         int userid = jwtHelper.getUserId(token).intValue();
         User user = userMapper.selectById(userid);
@@ -71,7 +71,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             return Result.ok(null);
         }
         return Result.build(null, ResultCodeEnum.USERNAME_USED);// USERNAME_USED表示用户名已被占用
-        //返回4001
+        //返回505
 
     }
     @Override
@@ -88,7 +88,5 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
 }
-
-
 
 
