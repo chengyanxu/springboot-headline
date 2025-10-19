@@ -29,7 +29,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Autowired
     private JwtHelper jwtHelper;
     @Override
-    public Result login(@RequestBody yUser user){
+    public Result login(@RequestBody User user){//@RequestBody表示接受前端传回的JSON数据
 //根据前端传回的账户密码，在数据库中取出对应的用户
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<User>();
         queryWrapper.eq(User::getUsername,user.getUsername());
